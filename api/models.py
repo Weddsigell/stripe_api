@@ -4,7 +4,7 @@ from django.db import models
 class Item(models.Model):
     name = models.CharField(max_length=255, null=False)
     discription = models.TextField(null=False)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = "Item"
