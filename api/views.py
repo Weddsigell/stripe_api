@@ -1,7 +1,7 @@
 import stripe
 from django.conf import settings
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 
 from .models import Item
 
@@ -13,8 +13,11 @@ def get_item(request, id):
     return item
 
 
-    item = get_object_or_404(Item, id=id)
 def get_stripe_session_id(request, id):
+    try:
+        item = Item.objects.get(id=id)
+    except Item.DoesNotExist:
+        return JsonResponse({"error": "Item does not exist"}, status=404)
     
     session = stripe.checkout.Session.create(
         success_url="http://localhost:8000/success/",
