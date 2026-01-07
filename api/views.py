@@ -1,7 +1,7 @@
 import stripe
 from django.conf import settings
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import Item
 
@@ -21,7 +21,7 @@ def get_stripe_id(request, id):
         line_items=[
             {
                 "price_data": {
-                    "currency": "rub",
+                    "currency": "usd",
                     "product_data": {"name": item.name},
                     "unit_amount": item.price,
                 },
@@ -31,4 +31,4 @@ def get_stripe_id(request, id):
         mode="payment",
     )
 
-    return JsonResponse({"session_id": session.id})
+    return redirect(session.url, code=303)
