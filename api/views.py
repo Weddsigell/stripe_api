@@ -1,3 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Item
+
+
+
+def get_item(request, id):
+    item = Item.objects.get(id=id)
+    return item
+
