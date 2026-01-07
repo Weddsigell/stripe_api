@@ -34,4 +34,4 @@ def get_stripe_session_id(request, id):
         mode="payment",
     )
 
-    return redirect(session.url, code=303)
+    return JsonResponse({"sessionId": session.id})
