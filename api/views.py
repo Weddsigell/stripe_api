@@ -1,6 +1,7 @@
 import stripe
 from django.conf import settings
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 from .models import Item
 
@@ -13,9 +14,20 @@ def get_item(request, id):
 
 
 def get_stripe_id(request, id):
+    item = get_object_or_404(Item, id=id)
+    
     session = stripe.checkout.Session.create(
         success_url="http://localhost:8000/success/",
-        line_items=[{"price": 54.00, "quantity": 2}],
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "rub",
+                    "product_data": {"name": item.name},
+                    "unit_amount": item.price,
+                },
+                "quantity": 1,
+            }
+        ],
         mode="payment",
     )
 
