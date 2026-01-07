@@ -13,8 +13,8 @@ def get_item(request, id):
     return item
 
 
-def get_stripe_id(request, id):
     item = get_object_or_404(Item, id=id)
+def get_stripe_session_id(request, id):
     
     session = stripe.checkout.Session.create(
         success_url="http://localhost:8000/success/",
