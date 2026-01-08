@@ -23,12 +23,12 @@ def get_item(request, id):
 
 
 def get_stripe_session_id(request, id):
-    try:
-        item = Item.objects.get(id=id)
-    except Item.DoesNotExist:
-        return JsonResponse({"error": "Item does not exist"}, status=404)
-
     if request.method == "GET":
+        try:
+            item = Item.objects.get(id=id)
+        except Item.DoesNotExist:
+            return JsonResponse({"error": "Item does not exist"}, status=404)
+
         session = stripe.checkout.Session.create(
             success_url="http://localhost:8000/success/",
             line_items=[
