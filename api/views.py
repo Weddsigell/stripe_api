@@ -9,12 +9,13 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def get_item(request, id):
-    item = Item.objects.get(id=id)
-    return render(
-        request,
-        "item.html",
-        {"item": item, "publishable_key": settings.STRIPE_PUBLISHABLE_KEY},
-    )
+    if request.method == "GET":
+        item = Item.objects.get(id=id)
+        return render(
+            request,
+            "item.html",
+            {"item": item, "publishable_key": settings.STRIPE_PUBLISHABLE_KEY},
+        )
 
 
 def get_stripe_session_id(request, id):
