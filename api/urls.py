@@ -7,5 +7,5 @@ app_name = "api"
 urlpatterns = [
     path("item/<int:id>/", get_item),
     path("buy/<int:id>/", get_stripe_session_id),
-    path('', index),
+    path("", index),
 ]
