@@ -14,5 +14,5 @@ CMD sh -c " \
   uv run manage.py migrate && \
   (uv run manage.py createsuperuser --noinput || true) && \
   uv run manage.py collectstatic --noinput && \
-  uv run gunicorn stripe_api.wsgi:application --bind 0.0.0.0:8000 \
+  uv run gunicorn stripe_api.wsgi:application --bind 0.0.0.0:$PORT \
 "
