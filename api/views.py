@@ -10,7 +10,11 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def get_item(request, id):
     if request.method == "GET":
-        item = Item.objects.get(id=id)
+        try:
+            item = Item.objects.get(id=id)
+        except Item.DoesNotExist:
+            return JsonResponse({"error": "Item does not exist"}, status=404)
+
         return render(
             request,
             "item.html",
