@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirill — Stripe API Demo</title>
+</head>
+<body>
+
+  <header>
+    <h1>Демонстрация работы API endpoints</h1>
+    <p>Пример взаимодействия Django + Stripe Checkout</p>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Доступные API методы</h2>
+
+      <article>
+        <h3>GET /buy/&lt;id&gt;</h3>
+        <p>
+          Возвращает <strong>Stripe Session ID</strong> для оплаты выбранного Item.
+        </p>
+        <ul>
+          <li>На бэкенде вызывается <code>stripe.checkout.Session.create(...)</code></li>
+          <li>В ответе возвращается <code>{"session_id": session.id}</code></li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>GET /item/&lt;id&gt;</h3>
+        <p>
+          Возвращает HTML-страницу с информацией о выбранном Item и кнопкой <strong>Buy</strong>.
+        </p>
+        <ul>
+          <li>По нажатию на кнопку отправляется запрос на <code>/buy/&lt;id&gt;</code></li>
+          <li>Полученный <code>session_id</code> используется для редиректа в Stripe Checkout</li>
+          <li>Редирект выполняется через <code>stripe.redirectToCheckout()</code></li>
+        </ul>
+      </article>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Список товаров</h2>
+
+      {% for item in items %}
+        <article>
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+          <p>Цена: {{ item.price }}</p>
+          <a href="/item/{{ item.id }}">Перейти к покупке</a>
+        </article>
+        <hr>
+      {% empty %}
+        <p>Товары не найдены, нужно заполнить БД</p>
+      {% endfor %}
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Stripe API Demo · Django</p>
+  </footer>
+
+</body>
+</html>

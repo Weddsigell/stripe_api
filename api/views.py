@@ -41,3 +41,8 @@ def get_stripe_session_id(request, id):
         )
 
         return JsonResponse({"session_id": session.id})
+
+
+def index(request):
+    items = Item.objects.all()
+    return render(request, "index.html", {"items": items})
