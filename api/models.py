@@ -7,7 +7,7 @@ class Item(models.Model):
     discription = models.TextField(null=False)
     price = models.PositiveIntegerField(
         validators=[MinValueValidator(51)],
-        help_text="Цена в центах (минимум 51 = $0.51)",
+        help_text="Цена в eвроцентах (минимум 51 = $0.51)",
     )
 
     class Meta:
