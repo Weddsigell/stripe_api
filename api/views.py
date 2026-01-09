@@ -30,11 +30,11 @@ def get_stripe_session_id(request, id):
             return JsonResponse({"error": "Item does not exist"}, status=404)
 
         session = stripe.checkout.Session.create(
-            success_url="http://localhost:8000/success/",
+            success_url="http://http://185.170.153.77",
             line_items=[
                 {
                     "price_data": {
-                        "currency": "usd",
+                        "currency": "eur",
                         "product_data": {"name": item.name},
                         "unit_amount": item.price,
                     },
